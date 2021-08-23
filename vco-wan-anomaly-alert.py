@@ -336,10 +336,10 @@ class pccwg_vco():
                         > wan_quality_hist_mean \
                         + wan_quality_hist_std * wan_quality_hist_std_factor:
                             wan_anomaly_msg = '''\
-                            %s of WAN %s of Edge %s is found to be %s and
-                            is %s standard deviation(s) away from the
-                            mean of %s and standard deviation of %s of
-                            the %s minute(s) before.
+                            %s of WAN %s between Edge %s and its associated
+                            Gateway is found to be %s and is %s standard
+                            deviation(s) away from the mean of %s and
+                            standard deviation of %s of the %s minute(s) before.
                             ''' % (
                             self._get_wan_quality_name(quality),
                             self._get_wan_name(wan, self.metrics),

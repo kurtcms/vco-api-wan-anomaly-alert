@@ -1,11 +1,10 @@
-
 # VMware VeloCloud SD-WAN: Detect and Alert of WAN Anomaly
 
 This Python app is containerised with [Docker Compose](https://docs.docker.com/compose/) for rapid and modular deployment that fits in any microservice architecture.
 
 It does the following:
 
-1. Call the [VMware VeloCloud Orchestrator API](#reference) to retrieve the WAN quality metrics i.e. upload and download latency, jitter and packet loss, between a SD-WAN Edge and its associated SD-WAN Gateway, for all of the Edges in the enterprise network;
+1. Call the [VMware VeloCloud Orchestrator API](#reference) to retrieve the WAN quality metrics i.e. upload and download latency, jitter and packet loss, between the SD-WAN Edge and its associated SD-WAN Gateway, for all of the Edges in the enterprise network;
 2. Detect WAN anomaly by comparing the WAN quality metrics of the last 5 minutes, to those of the 60 minutes before, with a sampling interval of 5 minutes; and
 3. Send an email alert should the averages of the WAN quality metrics of the last 5 minutes be more than two standard deviations higher than the averages of the 60-minute historical baseline.
 
@@ -156,9 +155,9 @@ $ (crontab -l; echo "*/5 * * * * /usr/bin/python3 /app/vco-wan-anomaly-alert.py"
 Email alert will be sent from `EMAIL_SENDER` to `EMAIL_RECEIVER` should an anomaly be found. The subject of the email will be `WAN Anomoly Alert` with the details of the anomaly in the email body.
 
 ```
-Latency (download, ms) of WAN BT Business Broadband of Edge LDN-vVCE is found to be 100.0 and is 2 standard deviation(s) away from the mean of 75.0 and standard deviation of 10.0 of the 60.0 minute(s) before.
-Jitter (download, ms) of WAN BT Business Broadband of Edge LDN-vVCE is found to be 5.0 and is 2 standard deviation(s) away from the mean of 2.0 and standard deviation of 1.0 of the 60.0 minute(s) before.
-Packet Loss (download, %) of WAN BT Business Broadband of Edge LDN-vVCE is found to be 5.0 and is 2 standard deviation(s) away from the mean of 1.0 and standard deviation of 1.0 of the 60.0 minute(s) before.
+Latency (download, ms) of WAN BT Business Broadband between Edge LDN-vVCE and its associated Gateway is found to be 100.0 and is 2 standard deviation(s) away from the mean of 75.0 and standard deviation of 10.0 of the 60.0 minute(s) before.
+Jitter (download, ms) of WAN BT Business Broadband between Edge LDN-vVCE and its associated Gateway is found to be 5.0 and is 2 standard deviation(s) away from the mean of 2.0 and standard deviation of 1.0 of the 60.0 minute(s) before.
+Packet Loss (download, %) of WAN BT Business Broadband between Edge LDN-vVCE and its associated Gateway is found to be 5.0 and is 2 standard deviation(s) away from the mean of 1.0 and standard deviation of 1.0 of the 60.0 minute(s) before.
 ```
 
 ## Reference
