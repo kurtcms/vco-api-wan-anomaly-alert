@@ -43,13 +43,13 @@ $ git clone https://github.com/kurtcms/vco-wan-anomaly-alert /app/
 
 ### Environment Variables
 
-The app expects the hostname, username and password for the VeloCloud Orchestrator as well as the SMTPS port number, SMTP server, the alert receiver email address, the alert sender email address and password, as environment variables in a `.env` file in the same directory. Be sure to create the `.env` file.
+The app expects the hostname, username and password for the VeloCloud Orchestrator as well as the SMTPS port number, SMTP server address, the alert receiver email address, the alert sender email address and password, as environment variables in a `.env` file in the same directory. Be sure to create the `.env` file.
 
 ```shell
 $ nano /app/.env
 ```
 
-And define the credentials accordingly.
+And define the variables accordingly.
 
 ```
 VCO_HOSTNAME = 'vco.managed-sdwan.com/'
