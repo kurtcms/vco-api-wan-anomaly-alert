@@ -356,7 +356,7 @@ class pccwg_vco():
             self._get_time()
             email_msg = 'Subject: WAN Anomoly Alert' \
                         + '\n\n' \
-                        + 'As of ' + self.time_end + ':' \
+                        + 'As of ' + self.time_end + ' UTC:' \
                         + '\n' \
                         + wan_anomaly
             self._email_wan_anomaly(email_msg)
