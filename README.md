@@ -12,8 +12,6 @@ For details on the WAN path monitoring mechanism and sampling interval, please r
 
 <img src="https://kurtcms.org/git/vco-wan-anomaly-alert/vco-wan-anomaly-alert-screenshot.png" width="550">
 
-![alt text]()
-
 ## Table of Content
 
 - [Getting Started](#getting-started)
