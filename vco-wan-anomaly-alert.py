@@ -115,7 +115,7 @@ class pccwg_vco():
         Replace non-alphanumeric character in string with a dash
         for sanitisation
         '''
-        return "".join([c if c.isalnum() else "-" for c in name])
+        return ''.join([c if c.isalnum() else '-' for c in name])
 
     def _get_time_e(self, interval_sec = None):
         '''
@@ -490,7 +490,7 @@ class pccwg_vco():
     def write_ent_events(self, events):
         pass
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     '''
     Create the VCO client object and detect WAN anomoly
     by calling the respective function
