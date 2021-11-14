@@ -4,7 +4,7 @@ This Python app is containerised with [Docker Compose](https://docs.docker.com/c
 
 It does the following:
 
-1. Call the [VMware VeloCloud Orchestrator API](#reference) to retrieve the WAN quality metrics i.e. upload and download latency, jitter and packet loss, between the SD-WAN Edge and its associated SD-WAN Gateway, for all of the Edges in the enterprise network;
+1. Call the [VMware VeloCloud Orchestrator (VCO) API](#reference) to retrieve the WAN quality metrics i.e. upload and download latency, jitter and packet loss, between the SD-WAN Edge and its associated SD-WAN Gateway, for all of the Edges in the enterprise network;
 2. Detect WAN anomaly by comparing the WAN quality metrics of the last 5 minutes, to those of the 60 minutes before, with a sampling interval of 5 minutes; and
 3. Send an email alert should the averages of the WAN quality metrics of the last 5 minutes be more than two standard deviations higher than the averages of the 60-minute historical baseline.
 
@@ -33,7 +33,7 @@ For details on the WAN path monitoring mechanism and sampling interval, please r
 Get started in three simple steps:
 
 1. [Download](#git-clone) a copy of the app;
-2. Create the [environment variables](#environment-variables) for the VeloCloud Orchestrator authentication, and modify the [sampling durations and interval](#sampling-durations-and-interval) and the [crontab](#crontab) if needed;
+2. Create the [environment variables](#environment-variables) for the VCO authentication and for email notification, and modify the [sampling durations and interval](#sampling-durations-and-interval) and the [crontab](#crontab) if needed;
 3. [Docker Compose](#docker-compose) or [build and run](#build-and-run) the image manually to start the app, or alternatively run the Python script as a standalone service.
 
 ### Git Clone
@@ -45,7 +45,11 @@ $ git clone https://github.com/kurtcms/vco-wan-anomaly-alert /app/
 
 ### Environment Variables
 
-The app expects the hostname, username and password for the VeloCloud Orchestrator as well as the SMTPS port number, SMTP server address, the alert receiver email address, the alert sender email address and password, as environment variables in a `.env` file in the same directory. Be sure to create the `.env` file.
+The app expects the hostname, the API token or the username and password for the VCO; as well as the SMTPS port number, SMTP server address, the alert receiver email address, the alert sender email address and password; as environment variables in a `.env` file in the same directory.
+
+Should both the API token, and the username and password, for the VCO be present, the app will always use the API token.
+
+Be sure to create the `.env` file.
 
 ```shell
 $ nano /app/.env
@@ -55,6 +59,11 @@ And define the variables accordingly.
 
 ```
 VCO_HOSTNAME = 'vco.managed-sdwan.com/'
+
+# Either the API token
+VCO_TOKEN = '(redacted)'
+
+# Or the username and password
 VCO_USERNAME = 'kurtcms@gmail.com'
 VCO_PASSWORD = '(redacted)'
 
@@ -127,7 +136,7 @@ $ docker run -it --rm --name vco-wan-anomaly-alert vco-wan-anomaly-alert
 
 #### Dependencies
 
-Alternatively the `vco-wan-anomaly-alert.py` script may be deployed as a standalone service. In which case be sure to install the following required libraries:
+Alternatively the `vco-wan-anomaly-alert.py` script may be deployed as a standalone service. In which case be sure to install the following required libraries for the `vco_main.py`:
 
 1. [Requests](https://github.com/psf/requests)
 2. [Python-dotenv](https://github.com/theskumar/python-dotenv)
@@ -136,12 +145,6 @@ Alternatively the `vco-wan-anomaly-alert.py` script may be deployed as a standal
 
 ```shell
 $ pip3 install requests python-dotenv numpy pandas
-```
-
-The [VeloCloud Orchestrator JSON-RPC API Client](https://github.com/vmwarecode/VeloCloud-Orchestrator-JSON-RPC-API-Client---Python) library is also required. Download it with [wget](https://www.gnu.org/software/wget/).
-
-```shell
-$ wget -P /app/ https://raw.githubusercontent.com/vmwarecode/VeloCloud-Orchestrator-JSON-RPC-API-Client---Python/master/client.py
 ```
 
 #### Cron
