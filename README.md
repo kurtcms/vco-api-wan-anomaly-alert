@@ -1,4 +1,4 @@
-# VMware VeloCloud SD-WAN: Detect and Alert of WAN Anomaly
+# VMware VeloCloud SD-WAN Orchestrator API: Detect and Alert of WAN Anomaly
 
 This Python app is containerised with [Docker Compose](https://docs.docker.com/compose/) for rapid and modular deployment that fits in any microservice architecture.
 
@@ -10,7 +10,7 @@ It does the following:
 
 For details on the WAN path monitoring mechanism and sampling interval, please refer to the [VMware SD-WAN Dynamic Multipath Optimisation (DMPO)](#reference) article on the VMware SD-WAN Knowledge Base.
 
-<img src="https://kurtcms.org/git/vco-wan-anomaly-alert/vco-wan-anomaly-alert-screenshot.png" width="550">
+<img src="https://kurtcms.org/git/vco-api-wan-anomaly-alert/vco-api-wan-anomaly-alert-screenshot.png" width="550">
 
 ## Table of Content
 
@@ -40,7 +40,7 @@ Get started in three simple steps:
 
 Download a copy of the app with `git clone`
 ```shell
-$ git clone https://github.com/kurtcms/vco-wan-anomaly-alert /app/
+$ git clone https://github.com/kurtcms/vco-api-wan-anomaly-alert /app/
 ```
 
 ### Environment Variables
@@ -67,6 +67,7 @@ VCO_TOKEN = '(redacted)'
 VCO_USERNAME = 'kurtcms@gmail.com'
 VCO_PASSWORD = '(redacted)'
 
+# For email notification
 EMAIL_SSL_PORT = 465
 EMAIL_SMTP_SERVER = 'smtp.kurtcms.org'
 EMAIL_SENDER = 'alert@kurtcms.org'
@@ -79,7 +80,7 @@ EMAIL_SENDER_PASSWORD = '(redacted)'
 The intervals for the WAN quality metrics are 300 seconds i.e. 5 minutes and 3,600 seconds i.e. 60 minutes, for the present and historical baseline respectively, with a sampling interval of 300 seconds i.e. 5 minutes. All of these are passed to the respective function as argument at runtime and may be adjusted if needed.
 
 ```shell
-$ nano /app/vco-wan-anomaly-alert.py
+$ nano /app/vco_api_wan_anomaly_alert.py
 ```
 Modify the values as appropriate.
 
@@ -123,20 +124,20 @@ $ docker-compose down
 Otherwise the Docker image can also be built manually.
 
 ```shell
-$ docker build -t vco-wan-anomaly-alert /app/
+$ docker build -t vco_api_wan_anomaly_alert /app/
 ```
 
 Run the image with Docker once it is ready.  
 
 ```shell
-$ docker run -it --rm --name vco-wan-anomaly-alert vco-wan-anomaly-alert
+$ docker run -it --rm --name vco_api_wan_anomaly_alert vco_api_wan_anomaly_alert
 ```
 
 ### Standalone Python Script
 
 #### Dependencies
 
-Alternatively the `vco-wan-anomaly-alert.py` script may be deployed as a standalone service. In which case be sure to install the following required libraries for the `vco_main.py`:
+Alternatively the `vco_api_wan_anomaly_alert.py` script may be deployed as a standalone service. In which case be sure to install the following required libraries for the `vco_api_main.py`:
 
 1. [Requests](https://github.com/psf/requests)
 2. [Python-dotenv](https://github.com/theskumar/python-dotenv)
@@ -152,7 +153,7 @@ $ pip3 install requests python-dotenv numpy pandas
 The script may then be executed with a task scheduler such as [cron](https://crontab.guru/) that runs it once every 5 minutes for example.
 
 ```shell
-$ (crontab -l; echo "*/5 * * * * /usr/bin/python3 /app/vco-wan-anomaly-alert.py") | crontab -
+$ (crontab -l; echo "*/5 * * * * /usr/bin/python3 /app/vco_api_wan_anomaly_alert.py") | crontab -
 ```
 
 ## Email Alert
