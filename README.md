@@ -1,6 +1,6 @@
 # VMware VeloCloud SD-WAN Orchestrator API: Detect and Alert of WAN Anomaly
 
-This Python app is containerised with [Docker Compose](https://docs.docker.com/compose/) for rapid and modular deployment that fits in any microservice architecture.
+This Python app is containerised with [Docker Compose](https://docs.docker.com/compose/) for a modular and cloud native deployment that fits in any microservice architecture.
 
 It does the following:
 
@@ -52,7 +52,7 @@ Should both the API token, and the username and password, for the VCO be present
 Be sure to create the `.env` file.
 
 ```shell
-$ nano /app/.env
+$ nano /app/vco-api-wan-anomaly-alert/.env
 ```
 
 And define the variables accordingly.
@@ -95,22 +95,24 @@ interval_sec_hist of 3600 i.e. 60 minutes
 
 ### Crontab
 
-By default the app is scheduled with [cron](https://crontab.guru/) to retrieve the WAN quality metrics every 5 minutes, with `stdout` and `stderr` redirected to the main process for `Docker logs`.  
+By default the app is scheduled with [cron](https://linux.die.net/man/8/cron) to retrieve the WAN quality metrics every 5 minutes, with `stdout` and `stderr` redirected to the main process for `Docker logs`.  
 
 Modify the `crontab` if a different schedule is required.
 
 ```shell
-$ nano /app/crontab
+$ nano /app/vco-api-wan-anomaly-alert/crontab
 ```
 
 ### Docker Container
 
+Packaged as a container, the app is a standalone, executable package that may be run on Docker Engine. Be sure to have [Docker](https://docs.docker.com/engine/install/) installed.
+
 #### Docker Compose
 
-With Docker Compose, the container may be provisioned with a single command. Be sure to have Docker Compose [installed](https://docs.docker.com/compose/install/).
+With Docker Compose, the app may be provisioned with a single command. Be sure to have [Docker Compose](https://docs.docker.com/compose/install/) installed.
 
 ```shell
-$ docker-compose up
+$ docker-compose up -d
 ```
 
 Stopping the container is as simple as a single command.
@@ -124,7 +126,7 @@ $ docker-compose down
 Otherwise the Docker image can also be built manually.
 
 ```shell
-$ docker build -t vco_api_wan_anomaly_alert /app/
+$ docker build -t vco_api_wan_anomaly_alert /app/vco-api-wan-anomaly-alert/
 ```
 
 Run the image with Docker once it is ready.  
@@ -135,9 +137,11 @@ $ docker run -it --rm --name vco_api_wan_anomaly_alert vco_api_wan_anomaly_alert
 
 ### Standalone Python Script
 
+Alternatively the `vco_api_wan_anomaly_alert.py` script may be deployed as a standalone service.
+
 #### Dependencies
 
-Alternatively the `vco_api_wan_anomaly_alert.py` script may be deployed as a standalone service. In which case be sure to install the following required libraries for the `vco_api_main.py`:
+In which case be sure to install the following required libraries for the `vco_api_main.py`:
 
 1. [Requests](https://github.com/psf/requests)
 2. [Python-dotenv](https://github.com/theskumar/python-dotenv)
@@ -150,15 +154,15 @@ $ pip3 install requests python-dotenv numpy pandas
 
 #### Cron
 
-The script may then be executed with a task scheduler such as [cron](https://crontab.guru/) that runs it once every 5 minutes for example.
+The script may then be executed with a task scheduler such as [cron](https://linux.die.net/man/8/cron) that runs it once every 5 minutes for example.
 
 ```shell
-$ (crontab -l; echo "*/5 * * * * /usr/bin/python3 /app/vco_api_wan_anomaly_alert.py") | crontab -
+$ (crontab -l; echo "*/5 * * * * /usr/bin/python3 /app/vco-api-wan-anomaly-alert/vco_api_wan_anomaly_alert.py") | crontab -
 ```
 
 ## Email Alert
 
-Email alert will be sent from `EMAIL_SENDER` to `EMAIL_RECEIVER` should an anomaly be found. The subject of the email will be `WAN Anomoly Alert` with the details of the anomaly in the email body.
+Email alert will be sent from `EMAIL_SENDER` to `EMAIL_RECEIVER` should an anomaly be found. The subject of the email will be `WAN Anomaly Alert` with the details of the anomaly in the email body.
 
 ```
 Latency (download, ms) of WAN BT Business Broadband between Edge LDN-vVCE and its associated Gateway is found to be 100.0 and is 2 standard deviation(s) away from the mean of 75.0 and standard deviation of 10.0 of the 60.0 minute(s) before.
