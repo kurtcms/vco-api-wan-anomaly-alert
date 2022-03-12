@@ -10,7 +10,7 @@ It does the following:
 
 For details on the WAN path monitoring mechanism and sampling interval, please refer to the [VMware SD-WAN Dynamic Multipath Optimisation (DMPO)](#reference) article on the VMware SD-WAN Knowledge Base.
 
-A detailed walk-though is available [here](https://kurtcms.org/vmware-velocloud-sd-wan-orchestrator-api-detect-and-alert-of-wan-anomaly/).
+A detailed walk-through is available [here](https://kurtcms.org/vmware-velocloud-sd-wan-orchestrator-api-detect-and-alert-of-wan-anomaly/).
 
 <img src="https://kurtcms.org/git/vco-api-wan-anomaly-alert/vco-api-wan-anomaly-alert-screenshot.png" width="550">
 
