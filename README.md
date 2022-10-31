@@ -12,7 +12,7 @@ For details on the WAN path monitoring mechanism and sampling interval, please r
 
 A detailed walk-through is available [here](https://kurtcms.org/vmware-velocloud-sd-wan-orchestrator-api-detect-and-alert-of-wan-anomaly/).
 
-<img src="https://kurtcms.org/git/vco-api-wan-anomaly-alert/vco-api-wan-anomaly-alert-screenshot.png" width="550">
+<img src="https://github.com/kurtcms/vco-api-wan-anomaly-alert/blob/master/screenshot.png" width="550">
 
 ## Table of Content
 
