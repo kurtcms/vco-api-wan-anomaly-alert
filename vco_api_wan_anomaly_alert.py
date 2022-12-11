@@ -10,7 +10,9 @@ if __name__ == '__main__':
     by calling the respective function
     '''
     conn = pccwg_vco()
-    conn.detect_wan_anomaly(5, 300, 3600)
+    conn.detect_wan_anomaly(min_per_sample = 5, 
+        interval_sec_present = 300, 
+        interval_sec_hist = 3600)
     '''
     min_per_sample of 5 i.e. one sample every 5 minutes
     interval_sec_present of 300 i.e. 5 minutes
