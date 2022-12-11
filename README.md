@@ -33,14 +33,15 @@ A detailed walk-through is available [here](https://kurtcms.org/vmware-velocloud
 Get started in three simple steps:
 
 1. [Download](#git-clone) a copy of the app;
-2. Create the [environment variables](#environment-variables) for the VCO authentication and for email notification, and modify the [sampling durations and interval](#sampling-durations-and-interval) and the [crontab](#crontab) if needed;
+2. Create the [environment variables](#environment-variables) for the VCO authentication and for email notification, and modify the [sampling durations and interval](#sampling-durations-and-interval) and the [crontab](#crontab) if needed; and
 3. [Docker Compose](#docker-compose) or [build and run](#build-and-run) the image manually to start the app, or alternatively run the Python script as a standalone service.
 
 ### Git Clone
 
-Download a copy of the app with `git clone`
+Download a copy of the app with `git clone`.
+
 ```shell
-$ git clone https://github.com/kurtcms/vco-api-wan-anomaly-alert /app/
+$ git clone https://github.com/kurtcms/vco-api-wan-anomaly-alert /app/vco-api-wan-anomaly-alert/
 ```
 
 ### Environment Variables
@@ -64,14 +65,14 @@ VCO_HOSTNAME = 'vco.managed-sdwan.com/'
 VCO_TOKEN = '(redacted)'
 
 # Or the username and password
-VCO_USERNAME = 'kurtcms@gmail.com'
+VCO_USERNAME = 'kurtcms'
 VCO_PASSWORD = '(redacted)'
 
 # For email notification
 EMAIL_SSL_PORT = 465
 EMAIL_SMTP_SERVER = 'smtp.kurtcms.org'
 EMAIL_SENDER = 'alert@kurtcms.org'
-EMAIL_RECEIVER = 'kurtcms@gmail.com'
+EMAIL_RECEIVER = 'noc@kurtcms.org'
 EMAIL_SENDER_PASSWORD = '(redacted)'
 ```
 
@@ -82,10 +83,13 @@ The intervals for the WAN quality metrics are 300 seconds i.e. 5 minutes and 3,6
 ```shell
 $ nano /app/vco_api_wan_anomaly_alert.py
 ```
+
 Modify the values as appropriate.
 
 ```python
-conn.detect_wan_anomaly(5, 300, 3600)
+conn.detect_wan_anomaly(min_per_sample = 5,
+    interval_sec_present = 300,
+    interval_sec_hist = 3600)
 '''
 min_per_sample of 5 i.e. one sample every 5 minutes
 interval_sec_present of 300 i.e. 5 minutes
@@ -95,7 +99,7 @@ interval_sec_hist of 3600 i.e. 60 minutes
 
 ### Crontab
 
-By default the app is scheduled with [cron](https://linux.die.net/man/8/cron) to retrieve the WAN quality metrics every 5 minutes, with `stdout` and `stderr` redirected to the main process for `Docker logs`.  
+By default the app is scheduled with [cron](https://linux.die.net/man/8/cron) to retrieve the WAN quality metrics every 5 minutes, with `stdout` and `stderr` redirected to the main process for `Docker logs`.
 
 Modify the `crontab` if a different schedule is required.
 
@@ -138,7 +142,7 @@ Otherwise the Docker image can also be built manually.
 $ docker build -t vco_api_wan_anomaly_alert /app/vco-api-wan-anomaly-alert/
 ```
 
-Run the image with Docker once it is ready.  
+Run the image with Docker once it is ready.
 
 ```shell
 $ docker run -it --rm --name vco_api_wan_anomaly_alert vco_api_wan_anomaly_alert
@@ -156,6 +160,8 @@ In which case be sure to install the following required libraries for the `vco_a
 2. [Python-dotenv](https://github.com/theskumar/python-dotenv)
 3. [NumPy](https://github.com/numpy/numpy)
 4. [pandas](https://github.com/pandas-dev/pandas)
+
+Install them with [`pip3`](https://github.com/pypa/pip):
 
 ```shell
 $ pip3 install requests python-dotenv numpy pandas
