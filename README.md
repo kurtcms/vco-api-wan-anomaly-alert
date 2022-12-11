@@ -109,7 +109,16 @@ Packaged as a container, the app is a standalone, executable package that may be
 
 #### Docker Compose
 
-With Docker Compose, the app may be provisioned with a single command. Be sure to have [Docker Compose](https://docs.docker.com/compose/install/) installed.
+With Docker Compose, the app may be provisioned with a single command.
+
+Install [Docker](https://docs.docker.com/engine/install/) and [Docker Compose](https://docs.docker.com/compose/install/) with the [Bash](https://github.com/gitGNU/gnu_bash) script that comes with app.
+
+```shell
+$ chmod +x /app/vco-api-wan-anomaly-alert/docker-compose/docker-compose.sh \
+    && /app/vco-api-wan-anomaly-alert/docker-compose/docker-compose.sh
+```
+
+Start the containers with Docker Compose.
 
 ```shell
 $ docker-compose up -d
