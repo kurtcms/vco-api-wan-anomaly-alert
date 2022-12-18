@@ -81,7 +81,7 @@ EMAIL_SENDER_PASSWORD = '(redacted)'
 The intervals for the WAN quality metrics are 300 seconds i.e. 5 minutes and 3,600 seconds i.e. 60 minutes, for the present and historical baseline respectively, with a sampling interval of 300 seconds i.e. 5 minutes. All of these are passed to the respective function as argument at runtime and may be adjusted if needed.
 
 ```shell
-$ nano /app/vco_api_wan_anomaly_alert.py
+$ nano /app/vco-api-wan-anomaly-alert/vco_api_wan_anomaly_alert.py
 ```
 
 Modify the values as appropriate.
